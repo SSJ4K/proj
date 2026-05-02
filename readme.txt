@@ -1,9 +1,15 @@
 
+Prerequisites
+php 7.4 or higher
+
+
+This file aims to educate the user on how to utilize my task tracker cli program. Type task-cli.php
+and any one of the commands after
 
 ***************************************************************************************************
+Clone repository
+https://github.com/SSJ4K/proj.git
 
-This fileaims to educate the user on how to utilize my task tracker cli program. Type task-cli.php
-and any one of the commands after
 
 Adding task:
 task-cli.php add "Buy groceries"
@@ -25,8 +31,5 @@ Listing tasks by status:
 task-cli.php list done
 task-cli.php list todo
 task-cli.php list in-progress
-
-
-
 
 ***************************************************************************************************
