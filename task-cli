@@ -119,21 +119,21 @@ function listTasks($action = null){
     switch ($action){
         case "done":
             if ($task["status"] == "done"){
-                $taskList .= "\n" . $task["description"] . " | " . $task["status"]. "\n";
+                $taskList .= "\n" . $task["id"]. ": " . $task["description"] . " | " . $task["status"]. "\n";
             }
             break;
         case "todo":
             if ($task["status"] == "todo"){
-                $taskList .= "\n" . $task["description"] . " | " . $task["status"]. "\n";
+                $taskList .= "\n" . $task["id"] . ": " . $task["description"] . " | " . $task["status"]. "\n";
             }
             break;
         case "in_progress":
             if ($task["status"] == "in_progress"){
-                $taskList .= "\n" . $task["description"] . " | " . $task["status"]. "\n";
+                $taskList .= "\n" . $task["id"]. ": " . $task["description"] . " | " . $task["status"]. "\n";
             }
             break;
         default:
-            $taskList .= "\n" . $task["description"] . " | " . $task["status"]. "\n";
+            $taskList .= "\n" . $task["id"] . ": " . $task["description"] . " | " . $task["status"]. "\n";
 
     }
         
