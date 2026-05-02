@@ -10,26 +10,27 @@ and any one of the commands after
 Clone repository
 https://github.com/SSJ4K/proj.git
 
+CD into project and type chmod +x task-cli
 
 Adding task:
-task-cli.php add "Buy groceries"
+./task-cli add "Buy groceries"
 
 Updating task:
-task-cli.php update 1 "Buy groceries and cook dinner"
+./task-cli update 1 "Buy groceries and cook dinner"
 
 Deleting Task:
-task-cli.php delete 1
+./task-cli delete 1
 
 Marking a task as in progress or done:
-task-cli.php mark-in-progress 1
-task-cli.php mark-done 1
+./task-cli mark-in-progress 1
+./task-cli mark-done 1
 
 Listing tasks:
-task-cli.php list
+./task-cli list
 
 Listing tasks by status:
-task-cli.php list done
-task-cli.php list todo
-task-cli.php list in-progress
+./task-cli list done
+./task-cli list todo
+./task-cli list in-progress
 
 ***************************************************************************************************
