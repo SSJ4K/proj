@@ -13,7 +13,7 @@ and any one of the commands after
 Clone repository
 https://github.com/SSJ4K/proj.git
 
-CD into project and type chmod +x task-cli
+Bash into project and type chmod +x task-cli
 
 Adding task:
 ./task-cli add "Buy groceries"

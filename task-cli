@@ -2,168 +2,34 @@
 
 <?php
 
+// Hides all warnings 
 error_reporting(0);
-
-$lastId = 0;
-$current = $current = file_get_contents('tasks.json'); // Read json file to update it
-
-function add($task, $status = "todo"){
-    global $current, $lastId;
-
-    $current = json_decode($current, true);
-
-    // Checks if file is empty and gets the id of the last item to aadd to the next
-    if (!empty($current)){
-        $ids = array_keys($current);
-        $lastId = end($ids) + 1;
-    }
-    else{
-        $current = [];
-    };
-
-
- $taskToAdd = [
-        "id" => $lastId,
-        "description" => $task,
-        "status" => $status,
-        "createdAt" => date("Y/m/d"),
-        "updatedAt" => date("Y/m/d")
-    ];
-
-
-    
-    $current[] = $taskToAdd;
-    $json[] = json_encode($current, JSON_PRETTY_PRINT);
-
-
-    file_put_contents('tasks.json', $json);
-
-    return "Task added successfully (ID:" .$taskToAdd["id"] ." )";
-}
-
-function  delete($id){
-    global $current; 
-
-    $taskToDelete = json_decode($current, true);
-
-    if (!isset($taskToDelete[$id])){
-        return "That ID does not exist";
-    }
-
-    unset($taskToDelete[$id]);
-
-    file_put_contents('tasks.json', json_encode($taskToDelete, JSON_PRETTY_PRINT));
-
-    return "Task deleted successfully (ID:" .$id ." )";
-
-}
-
-
-function update($id, $newTask){
-    global $current;
-
-    $updatedTask = json_decode($current, true);
-
-    if (!isset($updatedTask[$id])){
-        return "That ID does not exist";
-    }
-
-    $updatedTask[$id]["description"] = $newTask;
-    $updatedTask[$id]["updatedAt"] = date("Y/m/d");
-    file_put_contents('tasks.json', json_encode($updatedTask, JSON_PRETTY_PRINT));
-    return "Task updated successfully (ID:" .$id ." )";
-}
+require('taskClass.php');
 
 
 
-function mark($mark, $id){
-    global $current;
-
-    $taskToMark = json_decode($current, true);
-
-    if (!isset($taskToMark[$id])){
-        return "That ID does not exist";
-    }
-
-    switch ($mark){
-        case "mark-in-progress":
-            $taskToMark[$id]["status"] = "in_progress";
-            $taskToMark[$id]["updatedAt"] = date("Y/m/d");
-            break;
-        case "mark-done":
-           $taskToMark[$id]["status"] = "done";
-            $taskToMark[$id]["updatedAt"] = date("Y/m/d");
-            break; 
-    }
-    
-
-    file_put_contents('tasks.json', json_encode($taskToMark, JSON_PRETTY_PRINT));
-
-    return "Task marked successfully (ID:" .$id ." )";
-}
-
-
-function listTasks($action = null){
-    global $current;
-
-    $tasks = json_decode($current, true);
-    $taskList = "";
-
-
-    if (empty($tasks)){
-        return "File is empty";
-    }
-
-    foreach ($tasks as $task){
-
-    switch ($action){
-        case "done":
-            if ($task["status"] == "done"){
-                $taskList .= "\n" . $task["id"]. ": " . $task["description"] . " | " . $task["status"]. "\n";
-            }
-            break;
-        case "todo":
-            if ($task["status"] == "todo"){
-                $taskList .= "\n" . $task["id"] . ": " . $task["description"] . " | " . $task["status"]. "\n";
-            }
-            break;
-        case "in_progress":
-            if ($task["status"] == "in_progress"){
-                $taskList .= "\n" . $task["id"]. ": " . $task["description"] . " | " . $task["status"]. "\n";
-            }
-            break;
-        default:
-            $taskList .= "\n" . $task["id"] . ": " . $task["description"] . " | " . $task["status"]. "\n";
-
-    }
-        
-    }
-
-    return $taskList;
-}
-
-
+$task = new Task(file_get_contents('tasks.json'));
 
 
 if (strtolower($argv[1]) == "add"){
-    echo add($argv[2]);
+    echo $task->add($argv[2]);
 }
 else if( strtolower($argv[1]) == "update"){
-    echo update($argv[2], $argv[3]);
+    echo $task->update($argv[2], $argv[3]);
 }
 else if( strtolower($argv[1]) == "delete"){
-    echo delete($argv[2]);
+    echo $task->delete($argv[2]);
 }
 else if((strtolower($argv[1]) == "mark-in-progress") ||  (strtolower($argv[1]) == "mark-done")){
-    echo mark($argv[1], $argv[2]);
+    echo $task->mark($argv[1], $argv[2]);
 }
 else if( strtolower($argv[1]) == "list"){
 
     if (isset($argv[2])){
-        echo listTasks($argv[2]);
+        echo $task->listTasks($argv[2]);
     }
     else{
-        echo listTasks();
+        echo $task->listTasks();
     }
 
 }
